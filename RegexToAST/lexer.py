@@ -13,16 +13,26 @@ class TokenKind(Enum):
     ONE_OR_MORE = auto()
     END         = auto()
 
+
 @dataclass(frozen=True, slots=True)
 class Token:
     kind: TokenKind
     text: str
     position: int
 
+
 # =======================================
 
+
 def tokenize(text: str) -> list[Token]:
-    return [getTokenBySymb(c, i) for i, c in enumerate(text)]
+    tokens = [
+        getTokenBySymb(c, i)
+        for i, c in enumerate(text)
+        if not c.isspace()
+    ]
+    tokens.append(Token(TokenKind.END, '', len(text)))
+    return tokens
+
 
 def getTokenBySymb(c: str, i: int) -> Token:
     if c == '(':
@@ -43,6 +53,7 @@ def getTokenBySymb(c: str, i: int) -> Token:
         return Token(TokenKind.SYMBOL, c, i)
     else:
         raise ValueError(f'Invalid character: \'{c}\' at position {i}')
+
 
 def isSmallLatin(c: str) -> bool:
     return 'a' <= c <= 'z'
