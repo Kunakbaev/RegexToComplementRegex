@@ -8,6 +8,9 @@ from .finite_automaton import FiniteAutomaton, State, Symbol
 class SpecialTransitionSymbol(Enum):
     EPSILON = auto()
 
+    def __str__(self) -> str:
+        return "ε"
+
 
 EPSILON = SpecialTransitionSymbol.EPSILON
 TransitionLabel = Symbol | SpecialTransitionSymbol
