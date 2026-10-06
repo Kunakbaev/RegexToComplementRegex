@@ -1,5 +1,6 @@
+from Automata.NFAtoDFA import remove_epsilon_transitions
+from Automata.RegexToNFA import regex_to_nfa
 from Automata.automaton_image_gen import render_automaton
-from Automata.thompson import regex_to_nfa
 from RegexToAST.ast_image_gen import render_regex_AST
 from RegexToAST.lexer import tokenize
 from RegexToAST.parser import RegexParser
@@ -29,6 +30,19 @@ def main():
         f"accepting states {sorted(nfa.accepting_states)}"
     )
     print(f"NFA image: {nfa_image_path}")
+
+    epsilon_free_nfa = remove_epsilon_transitions(nfa)
+    epsilon_free_nfa_image_path = render_automaton(
+        epsilon_free_nfa,
+        file_name="epsilon_free_nfa",
+    )
+    print(
+        f"Epsilon-free NFA: {epsilon_free_nfa.numStates} states, "
+        f"{epsilon_free_nfa.numTransitions} transitions, "
+        f"start state {epsilon_free_nfa.start_state}, "
+        f"accepting states {sorted(epsilon_free_nfa.accepting_states)}"
+    )
+    print(f"Epsilon-free NFA image: {epsilon_free_nfa_image_path}")
 
 
 if __name__ == "__main__":

@@ -3,8 +3,8 @@ from dataclasses import dataclass
 
 from RegexToAST.regex_ast import Alt, Concat, EmptySet, Epsilon, OneOrMore, Regex, Star, Symbol
 
-from .finite_automaton import State
-from .nfa import EPSILON, NFA, NFABuilder, TransitionLabel
+from ..finite_automaton import State
+from ..nfa import EPSILON, NFA, NFABuilder, TransitionLabel
 
 
 @dataclass(frozen=True, slots=True)
