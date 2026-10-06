@@ -1,4 +1,4 @@
-from Automata.NFAtoDFA import remove_epsilon_transitions
+from Automata.NFAtoDFA import nfa_to_dfa, remove_epsilon_transitions
 from Automata.RegexToNFA import regex_to_nfa
 from Automata.automaton_image_gen import render_automaton
 from RegexToAST.ast_image_gen import render_regex_AST
@@ -6,7 +6,8 @@ from RegexToAST.lexer import tokenize
 from RegexToAST.parser import RegexParser
 
 
-ALPHABET = frozenset("abcdefghijklmnopqrstuvwxyz")
+# ALPHABET = frozenset("abcdefghijklmnopqrstuvwxyz")
+ALPHABET = frozenset("ab")
 
 
 def main():
@@ -43,6 +44,16 @@ def main():
         f"accepting states {sorted(epsilon_free_nfa.accepting_states)}"
     )
     print(f"Epsilon-free NFA image: {epsilon_free_nfa_image_path}")
+
+    dfa = nfa_to_dfa(epsilon_free_nfa)
+    dfa_image_path = render_automaton(dfa, file_name="dfa")
+    print(
+        f"DFA: {dfa.numStates} states, "
+        f"{dfa.numTransitions} transitions, "
+        f"start state {dfa.start_state}, "
+        f"accepting states {sorted(dfa.accepting_states)}"
+    )
+    print(f"DFA image: {dfa_image_path}")
 
 
 if __name__ == "__main__":
