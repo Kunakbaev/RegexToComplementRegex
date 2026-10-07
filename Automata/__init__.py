@@ -1,3 +1,4 @@
+from .DFAComplement import complement_dfa
 from .DFAMinimization import minimize_dfa
 from .DFAtoRegex import (
     GNFA,
@@ -28,6 +29,7 @@ __all__ = [
     "ThompsonBuilder",
     "TransitionLabel",
     "automaton_to_dot",
+    "complement_dfa",
     "dfa_to_gnfa",
     "dfa_to_regex",
     "epsilon_closure",
