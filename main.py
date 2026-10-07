@@ -1,3 +1,4 @@
+from Automata.DFAMinimization import minimize_dfa
 from Automata.NFAtoDFA import nfa_to_dfa, remove_epsilon_transitions
 from Automata.RegexToNFA import regex_to_nfa
 from Automata.automaton_image_gen import render_automaton
@@ -54,6 +55,19 @@ def main():
         f"accepting states {sorted(dfa.accepting_states)}"
     )
     print(f"DFA image: {dfa_image_path}")
+
+    minimal_dfa = minimize_dfa(dfa)
+    minimal_dfa_image_path = render_automaton(
+        minimal_dfa,
+        file_name="minimal_dfa",
+    )
+    print(
+        f"Minimal DFA: {minimal_dfa.numStates} states, "
+        f"{minimal_dfa.numTransitions} transitions, "
+        f"start state {minimal_dfa.start_state}, "
+        f"accepting states {sorted(minimal_dfa.accepting_states)}"
+    )
+    print(f"Minimal DFA image: {minimal_dfa_image_path}")
 
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+from .DFAMinimization import minimize_dfa
 from .NFAtoDFA import epsilon_closure, nfa_to_dfa, remove_epsilon_transitions
 from .RegexToNFA import NFAFragment, ThompsonBuilder, regex_to_nfa
 from .automaton_image_gen import render_automaton
@@ -19,6 +20,7 @@ __all__ = [
     "TransitionLabel",
     "automaton_to_dot",
     "epsilon_closure",
+    "minimize_dfa",
     "nfa_to_dfa",
     "regex_to_nfa",
     "remove_epsilon_transitions",

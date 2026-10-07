@@ -13,14 +13,17 @@ TransitionValueType = TypeVar("TransitionValueType")
 def render_automaton(
     automaton: FiniteAutomaton[TransitionLabelType, TransitionValueType],
     file_name: str = "automaton",
-    dir_name: Path = Path("images"),
+    image_dir_name: Path = Path("images"),
+    dot_dir_name: Path = Path("dot"),
 ) -> Path:
     graph = automaton_to_dot(automaton)
-    dir_name.mkdir(parents=True, exist_ok=True)
+    image_dir_name.mkdir(parents=True, exist_ok=True)
+    dot_dir_name.mkdir(parents=True, exist_ok=True)
 
     image_path = graph.render(
-        filename=file_name,
-        directory=dir_name,
+        filename=f"{file_name}.dot",
+        directory=dot_dir_name,
+        outfile=image_dir_name / f"{file_name}.svg",
         format="svg",
     )
     return Path(image_path)
