@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 
-from RegexToAST.regex_ast import EmptySet, Epsilon, Regex, Symbol
+from RegexToAST.regex_ast import Alt, EmptySet, Epsilon, Regex, Symbol
+from RegexToAST.regex_simplification import simplify_regex
 
 from ..dfa import DFA
 from ..finite_automaton import State
-from .regex_operations import make_alt
 
 
 @dataclass
@@ -57,7 +57,7 @@ class GNFA:
         self.setTransition(
             source,
             destination,
-            make_alt(self.getTransition(source, destination), regex),
+            simplify_regex(Alt((self.getTransition(source, destination), regex))),
         )
 
     def removeState(self, state: State) -> None:
