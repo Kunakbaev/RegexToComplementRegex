@@ -87,6 +87,25 @@ class DFAToRegexTest(unittest.TestCase):
         self.assertEqual(dfa_to_regex(all_words_dfa), Star(Symbol("a")))
         self.assertEqual(dfa_to_regex(empty_language_dfa), EmptySet())
 
+    def testCallsCallbackAfterEveryStateElimination(self):
+        dfa = DFA(
+            alphabet=frozenset(("a",)),
+            transitions=[
+                {"a": 1},
+                {"a": 1},
+            ],
+            start_state=0,
+            accepting_states=frozenset((1,)),
+        )
+        steps = []
+
+        def remember_step(gnfa, removed_state, step):
+            steps.append((removed_state, step, len(gnfa.states)))
+
+        dfa_to_regex(dfa, on_state_eliminated=remember_step)
+
+        self.assertEqual(steps, [(0, 1, 3), (1, 2, 2)])
+
 
 if __name__ == "__main__":
     unittest.main()

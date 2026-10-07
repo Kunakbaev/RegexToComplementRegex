@@ -1,9 +1,14 @@
+from collections.abc import Callable
+
 from RegexToAST.regex_ast import Alt, Concat, Regex, Star
 from RegexToAST.regex_simplification import simplify_regex
 
 from ..dfa import DFA
 from ..finite_automaton import State
 from .generalized_nfa import GNFA, dfa_to_gnfa
+
+
+StateEliminatedCallback = Callable[[GNFA, State, int], None]
 
 
 def eliminate_state(gnfa: GNFA, state: State) -> None:
@@ -36,11 +41,16 @@ def eliminate_state(gnfa: GNFA, state: State) -> None:
     gnfa.removeState(state)
 
 
-def dfa_to_regex(dfa: DFA) -> Regex:
+def dfa_to_regex(
+    dfa: DFA,
+    on_state_eliminated: StateEliminatedCallback | None = None,
+) -> Regex:
     gnfa = dfa_to_gnfa(dfa)
 
-    for state in dfa.states:
+    for step, state in enumerate(dfa.states, start=1):
         eliminate_state(gnfa, state)
+        if on_state_eliminated is not None:
+            on_state_eliminated(gnfa, state, step)
 
     return simplify_regex(
         gnfa.getTransition(gnfa.start_state, gnfa.accepting_state)

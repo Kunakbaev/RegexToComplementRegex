@@ -1,5 +1,12 @@
 from .DFAMinimization import minimize_dfa
-from .DFAtoRegex import GNFA, dfa_to_gnfa, dfa_to_regex, eliminate_state
+from .DFAtoRegex import (
+    GNFA,
+    dfa_to_gnfa,
+    dfa_to_regex,
+    eliminate_state,
+    gnfa_to_dot,
+    render_gnfa,
+)
 from .NFAtoDFA import epsilon_closure, nfa_to_dfa, remove_epsilon_transitions
 from .RegexToNFA import NFAFragment, ThompsonBuilder, regex_to_nfa
 from .automaton_image_gen import render_automaton
@@ -25,9 +32,11 @@ __all__ = [
     "dfa_to_regex",
     "epsilon_closure",
     "eliminate_state",
+    "gnfa_to_dot",
     "minimize_dfa",
     "nfa_to_dfa",
     "regex_to_nfa",
     "remove_epsilon_transitions",
     "render_automaton",
+    "render_gnfa",
 ]

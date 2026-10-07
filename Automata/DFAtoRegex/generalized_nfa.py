@@ -1,3 +1,4 @@
+from collections.abc import Iterator
 from dataclasses import dataclass
 
 from RegexToAST.regex_ast import Alt, EmptySet, Epsilon, Regex, Symbol
@@ -69,6 +70,12 @@ class GNFA:
         self.transitions.pop(state, None)
         for outgoing_transitions in self.transitions.values():
             outgoing_transitions.pop(state, None)
+
+    def iterEdges(self) -> Iterator[tuple[State, Regex, State]]:
+        for source in sorted(self.states):
+            outgoing_transitions = self.transitions.get(source, {})
+            for destination, regex in sorted(outgoing_transitions.items()):
+                yield source, regex, destination
 
 
 def dfa_to_gnfa(dfa: DFA) -> GNFA:
